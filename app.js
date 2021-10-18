@@ -23,6 +23,10 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 app.use(routerUser);
 app.use(routerCard);
 
+app.use((req, res) => {
+  res.status(404).send({ message: 'Проверьте корректность указанной ссылки!' });
+});
+
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });

@@ -11,7 +11,8 @@ module.exports.findUsers = (req, res) => {
 };
 
 module.exports.findUserId = (req, res) => {
-  User.find(req.params.id)
+  const { userId } = req.params;
+  User.findById(userId)
     .then((user) => {
       if (user) {
         res.status(200).send({ data: user });
