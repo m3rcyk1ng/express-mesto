@@ -8,6 +8,8 @@ const { findUsers, findUserId, updateProfileInfo, updateProfileAvatar, findUser 
 const { isUrl } = require('../isurl/isurl');
 
 router.get('/users', findUsers);
+router.get('/users/me', findUser);
+
 router.get('/users/:userId', celebrate({
   // валидируем параметры
   params: Joi.object()
@@ -18,7 +20,6 @@ router.get('/users/:userId', celebrate({
         .hex(),
     }),
 }), findUserId);
-router.get('/users/me', findUser);
 
 router.patch('/users/me', celebrate({
   // валидируем параметры
@@ -34,11 +35,13 @@ router.patch('/users/me', celebrate({
         .max(30),
     }),
 }), updateProfileInfo);
+
 router.patch('/users/me/avatar', celebrate({
   // валидируем параметры
   body: Joi.object()
     .keys({
       avatar: Joi.string()
+        .required()
         .custom(isUrl),
     }),
 }), updateProfileAvatar);
